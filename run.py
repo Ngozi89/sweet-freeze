@@ -22,7 +22,10 @@ def get_dailysales_data():
     print("10,15,22,30,36,42,50,56,60,70,90,98\n")
 
     data_str = input("Enter your data here: ")
-    print(f"The data provided is {data_str}")
+    
+
+    dailysales_data = data_str.split(',')
+    print(dailysales_data)
 
 get_dailysales_data()
 

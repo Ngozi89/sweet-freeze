@@ -16,16 +16,20 @@ def get_dailysales_data():
     """
     Get dailysales input from customers
     """
+    while True:
+        print("Provide dailysales data from the last market day.")
+        print("Data should be twelve numbers, separated by commas.")
+        print("10,15,22,30,36,42,50,56,60,70,90,98\n")
 
-    print("Provide dailysales data from the last market day.")
-    print("Data should be twelve numbers, separated by commas.")
-    print("10,15,22,30,36,42,50,56,60,70,90,98\n")
-
-    data_str = input("Enter your data here: ")
+        data_str = input("Enter your data here: ")
     
 
-    dailysales_data = data_str.split(',')
-    validate_data(dailysales_data)
+        dailysales_data = data_str.split(',')
+    
+
+        if validate_data(dailysales_data):
+            print("Valid Data!")
+            break
 
 def validate_data(values):
     """
@@ -33,15 +37,20 @@ def validate_data(values):
     Display error if string values cannot
     be convert into integer or if the values are below 
     or above twelve
-    """ 
+    """
+    print(values) 
     try:
+        [int(value) for value in values]
         if len(values) != 12:
             raise ValueError(
                 
                f"Only 12 values required, you provided {len(values)}"
         )
     except ValueError as e:
-        print(f"Invalid data: {e}, try again. \n")       
+        print(f"Invalid data: {e}, try again. \n")
+        return False
+
+    return True
 
 get_dailysales_data()
 

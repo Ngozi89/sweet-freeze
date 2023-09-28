@@ -12,7 +12,17 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('sweet_freeze')
 
-dailysales = SHEET.worksheet('dailysales')
+def get_dailysales_data():
+    """
+    Get dailysales input from customers
+    """
 
-data = dailysales.get_all_values()
-print(data)
+    print("Provide dailysales data from the last market day.")
+    print("Data should be twelve numbers, separated by commas.")
+    print("10,15,22,30,36,42,50,56,60,70,90,98\n")
+
+    data_str = input("Enter your data here: ")
+    print(f"The data provided is {data_str}")
+
+get_dailysales_data()
+

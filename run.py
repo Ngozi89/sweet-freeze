@@ -25,7 +25,10 @@ def get_dailysales_data():
     
 
     dailysales_data = data_str.split(',')
-    print(dailysales_data)
+    validate_data(dailysales_data)
+
+def validate_data(values): 
+    print(values)   
 
 get_dailysales_data()
 

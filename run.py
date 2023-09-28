@@ -27,8 +27,21 @@ def get_dailysales_data():
     dailysales_data = data_str.split(',')
     validate_data(dailysales_data)
 
-def validate_data(values): 
-    print(values)   
+def validate_data(values):
+    """
+    Covert string values to integer.
+    Display error if string values cannot
+    be convert into integer or if the values are below 
+    or above twelve
+    """ 
+    try:
+        if len(values) != 12:
+            raise ValueError(
+                
+               f"Only 12 values required, you provided {len(values)}"
+        )
+    except ValueError as e:
+        print(f"Invalid data: {e}, try again. \n")       
 
 get_dailysales_data()
 

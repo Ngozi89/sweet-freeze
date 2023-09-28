@@ -1,5 +1,5 @@
 import gspread
-from google_auth_oauth2.service_account import Credentials
+from google.oauth2.service_account import Credentials
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -8,6 +8,11 @@ SCOPE = [
     ]
 
 CREDS = Credentials.from_service_account_file('creds.json')
-SCOPE_CREDS = CREDS.with_scopes(SCOPE)
+SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
-SHEET = GSPREAD_CLIENT.open('sweet_freeze')    
+SHEET = GSPREAD_CLIENT.open('sweet_freeze')
+
+dailysales = SHEET.worksheet('dailysales')
+
+data = dailysales.get_all_values()
+print(data)

@@ -69,7 +69,13 @@ def calculate_leftover_data(dailysales_row):
     print("Calculate leftove data...\n")
     stock = SHEET.worksheet("stock").get_all_values()
     stock_row = stock[-1]
-    print(stock_row) 
+    
+    leftove_data = []
+    for stock, dailysales in zip(stock_row, dailysales_row):
+        leftove = int(stock) - dailysales
+        leftove_data.append(leftove)
+
+    return leftove_data   
 
 
 def main():
@@ -79,7 +85,8 @@ def main():
     data = get_dailysales_data()
     dailysales_data = [int(num) for num in data]
     update_dailysales_worksheet(dailysales_data)
-    calculate_leftover_data(dailysales_data)
+    new_leftover_data = calculate_leftover_data(dailysales_data)
+    print(new_leftover_data)
 
 
 print("Welcome to Sweet Freeze Data Automation")

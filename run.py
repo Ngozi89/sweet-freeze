@@ -30,7 +30,7 @@ def get_dailysales_data():
             print("Valid data!")
             break
 
-    return dailysales_data     
+    return dailysales_data
 
 
 def validate_data(values):
@@ -52,14 +52,15 @@ def validate_data(values):
     return True
 
 
-def update_dailysales_worksheet(data):
+def update_worksheet(data, worksheet):
     """
-    Update daily sales worksheet, add new row with the list data provided
+    Receive a list of integers to be inserted into a worksheet
+    Update the relevant worksheet with the data provided
     """
-    print("Updating dailysales worksheet...\n")
-    sales_worksheet = SHEET.worksheet("dailysales")
-    sales_worksheet.append_row(data)
-    print("Daliysales worksheet updated successfully.\n")
+    print(f"Updating {worksheet} worksheet...\n")
+    worksheet_to_update = SHEET.worksheet(worksheet)
+    worksheet_to_update.append_row(data)
+    print(f"{worksheet} worksheet update successfully\n")
 
 
 def calculate_leftover_data(dailysales_row):
@@ -69,13 +70,13 @@ def calculate_leftover_data(dailysales_row):
     print("Calculate leftove data...\n")
     stock = SHEET.worksheet("stock").get_all_values()
     stock_row = stock[-1]
-    
+
     leftove_data = []
     for stock, dailysales in zip(stock_row, dailysales_row):
         leftove = int(stock) - dailysales
         leftove_data.append(leftove)
 
-    return leftove_data   
+    return leftove_data
 
 
 def main():
@@ -84,9 +85,9 @@ def main():
     """
     data = get_dailysales_data()
     dailysales_data = [int(num) for num in data]
-    update_dailysales_worksheet(dailysales_data)
+    update_worksheet(dailysales_data, "dailysales")
     new_leftover_data = calculate_leftover_data(dailysales_data)
-    print(new_leftover_data)
+    update_worksheet(new_leftover_data, "leftover")
 
 
 print("Welcome to Sweet Freeze Data Automation")

@@ -79,6 +79,37 @@ def calculate_leftover_data(dailysales_row):
     return leftove_data
 
 
+def get_last_7_enteries_dailysale():
+    """
+    Take collums of data from daliysales worksheet
+    Take each day entries for ice cream and return the data as a list of lists.
+    """
+    dailysales = SHEET.worksheet("dailysales")
+
+    columns = []
+    for ind in range(1, 13):
+        column = dailysales.col_values(ind)
+        columns.append(column[-6:])
+
+    return columns
+
+
+def calculate_stock_data(data):
+    """
+    Calculate stock data
+    """
+    print("Calculating stock data...\n")
+    new_stock_data = []
+
+    for column in data:
+        int_column = [int(num) for num in column]
+        average = sum(int_column) / 6
+        stock_num = average * 1.1
+        new_stock_data.append(round(stock_num))
+
+    return new_stock_data
+
+
 def main():
     """
     Run all program function
@@ -88,6 +119,9 @@ def main():
     update_worksheet(dailysales_data, "dailysales")
     new_leftover_data = calculate_leftover_data(dailysales_data)
     update_worksheet(new_leftover_data, "leftover")
+    dailysales_columns = get_last_7_enteries_dailysale()
+    stock_data = calculate_stock_data(dailysales_columns)
+    update_worksheet(stock_data, "stock")
 
 
 print("Welcome to Sweet Freeze Data Automation")

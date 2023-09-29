@@ -1,5 +1,6 @@
 import gspread
 from google.oauth2.service_account import Credentials
+from pprint import pprint
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -18,7 +19,7 @@ def get_dailysales_data():
     Get dailysales figures input from the user
     """
     while True:
-        print("Provide dailysales data from the last market day.")
+        print("Kindly provide sales data from yesterday's sales.")
         print("Data should be twelve numbers, separated by commas.")
         print("Example: 10,15,20,25,30,35,40,45,50,55,60,65\n")
 
@@ -61,6 +62,25 @@ def update_dailysales_worksheet(data):
     print("Daliysales worksheet updated successfully.\n")
 
 
-data = get_dailysales_data()
-dailysales_data = [int(num) for num in data]
-update_dailysales_worksheet(dailysales_data)
+def calculate_leftover_data(dailysales_row):
+    """
+    Calculate dailysales with leftover for ice cream
+    """
+    print("Calculate leftove data...\n")
+    stock = SHEET.worksheet("stock").get_all_values()
+    stock_row = stock[-1]
+    print(stock_row) 
+
+
+def main():
+    """
+    Run all program function
+    """
+    data = get_dailysales_data()
+    dailysales_data = [int(num) for num in data]
+    update_dailysales_worksheet(dailysales_data)
+    calculate_leftover_data(dailysales_data)
+
+
+print("Welcome to Sweet Freeze Data Automation")
+main()

@@ -12,45 +12,55 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('sweet_freeze')
 
+
 def get_dailysales_data():
     """
-    Get dailysales input from customers
+    Get dailysales figures input from the user
     """
     while True:
         print("Provide dailysales data from the last market day.")
         print("Data should be twelve numbers, separated by commas.")
-        print("10,15,22,30,36,42,50,56,60,70,90,98\n")
+        print("Example: 10,15,20,25,30,35,40,45,50,55,60,65\n")
 
         data_str = input("Enter your data here: ")
-    
-
-        dailysales_data = data_str.split(',')
-    
+        dailysales_data = data_str.split(",")
 
         if validate_data(dailysales_data):
-            print("Valid Data!")
+            print("Valid data!")
             break
+
+    return dailysales_data     
+
 
 def validate_data(values):
     """
     Covert string values to integer.
-    Display error if string values cannot
-    be convert into integer or if the values are below 
-    or above twelve
+    Display error if string values cannot be convert into integer.
+    or if the values are below or above twelve
     """
-    print(values) 
     try:
         [int(value) for value in values]
         if len(values) != 12:
             raise ValueError(
-                
                f"Only 12 values required, you provided {len(values)}"
-        )
+            )
     except ValueError as e:
-        print(f"Invalid data: {e}, try again. \n")
+        print(f"Invalid data: {e}, try again.\n")
         return False
 
     return True
 
-get_dailysales_data()
 
+def update_dailysales_worksheet(data):
+    """
+    Update daily sales worksheet, add new row with the list data provided
+    """
+    print("Updating dailysales worksheet...\n")
+    sales_worksheet = SHEET.worksheet("dailysales")
+    sales_worksheet.append_row(data)
+    print("Daliysales worksheet updated successfully.\n")
+
+
+data = get_dailysales_data()
+dailysales_data = [int(num) for num in data]
+update_dailysales_worksheet(dailysales_data)

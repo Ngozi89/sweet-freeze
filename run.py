@@ -64,7 +64,7 @@ def update_worksheet(data, worksheet):
 
 def calculate_leftover_data(dailysales_row):
     """
-    Calculate dailysales with leftover for ice cream
+    Calculate dailysales with leftover ice cream
     """
     print("Calculate leftove data...\n")
     stock = SHEET.worksheet("stock").get_all_values()
